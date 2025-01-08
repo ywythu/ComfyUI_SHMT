@@ -1,2 +1,0 @@
-1.先在本目录新建  setup.py 
-2.打开cmd 执行python setup.py build_ext --inplace
