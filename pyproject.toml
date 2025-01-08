@@ -3,7 +3,7 @@ name = "comfyui_shmt"
 description = "You can use SHMT method to apply makeup to the characters when use ComfyUI"
 version = "1.0.0"
 license = "LICENSE"
-
+dependencies = ["torch", "torchvision", "opencv-python", "albumentations==0.4.4","imageio","pytorch-lightning","omegaconf","torch-fidelity","transformers"]
 [project.urls]
 Repository = "https://github.com/smthemex/ComfyUI_SHMT"
 #  Used by Comfy Registry https://comfyregistry.org
