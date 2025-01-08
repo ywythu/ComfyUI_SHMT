@@ -56,7 +56,7 @@ Two methods need to be manually compiled/需要手动编译2个方法
 
 
 # Citation
-[@jonathandinu](https://github.com/jonathandinu) thanks her face-parsing
+[@jonathandinu](https://github.com/jonathandinu) thanks his face-parsing
 
 ```
 @article{sun2024shmt,
