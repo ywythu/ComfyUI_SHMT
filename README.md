@@ -2,6 +2,7 @@
 You can use [SHMT](https://github.com/Snowfallingplum/SHMT) method to apply makeup to the characters  when use ComfyUI 
 
 # Update 
+* 插件测试环境，torch2.5.1 ，cuda124，python311 / Node testing environment, torch2.5.1 ，cuda124，python311
 * 目前模型mix无法使用，plms模式无法使用，出图尺寸修改了原方法只能跑256x256的限制，12G Vram跑640x640有几率OOM；请务必用正方形图片； 
 * At present, the model 'mix' cannot be used, the 'plms' mode cannot be used, and the drawing size has been modified to the original method's limit of only running 256 x 256. There is a chance of OOM when running 640 x 640 in 12G Vram，Please make sure to use a square image；  
 
@@ -31,7 +32,7 @@ Two methods need to be manually compiled/需要手动编译2个方法
 * 4.1 SHMT h4 or h0,download in [google driver](https://drive.google.com/drive/folders/1UJDdGCeE6qEqr3yi6BK1tEkwnjVKQDZY), 核心模型，h4或者h0 ，百度网盘，迟点上传
 * 4.2 latent-diffusion [VQ-f4](https://github.com/CompVis/latent-diffusion?tab=readme-ov-file)
 * 4.3 face-parsing  huggingface [jonathandinu/face-parsing](https://huggingface.co/jonathandinu/face-parsing/tree/main)
-* 4.4 3DDFA_V2 resnet22.pth
+* 4.4 3DDFA_V2：resnet22.pth [Google driver](https://drive.google.com/file/d/1dh7JZgkj1IaO4ZcSuBOBZl2suT9EPedV/view)  或者 [百度](https://pan.baidu.com/share/init?surl=IS7ncVxhw0f955ySg67Y4A) 提取码 lv1a
 ```
 ├── ComfyUI/models/SHMT
 |         ├── epoch=000710-001.ckpt #h4   4.41G
