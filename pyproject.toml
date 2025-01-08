@@ -1,0 +1,14 @@
+[project]
+name = "comfyui_shmt"
+description = "You can use SHMT method to apply makeup to the characters when use ComfyUI"
+version = "1.0.0"
+license = "LICENSE"
+
+[project.urls]
+Repository = "https://github.com/smthemex/ComfyUI_SHMT"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = "smthemex"
+DisplayName = "ComfyUI_SHMT"
+Icon = ""
