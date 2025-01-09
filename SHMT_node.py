@@ -57,7 +57,7 @@ class SHMT_LoadModel:
             raise "need choice ae ckpt"
         model2 = None
         if shmt_ckpt != "none":
-            if shmt_ckpt == "epoch=000710-001.ckpt":  # h4
+            if "710" in shmt_ckpt:  # h4
                 
                 config = OmegaConf.load(os.path.join(current_path, "configs/latent-diffusion/shmt_h4.yaml"))
                 config.model.params.first_stage_config.params.ckpt_path = ae_ckpt
@@ -72,7 +72,7 @@ class SHMT_LoadModel:
                 else:
                     mode = "h4"
                     print("***********infer h4 model************")
-            else:
+            elif "755" in shmt_ckpt:  # h0:
                 config = OmegaConf.load(os.path.join(current_path, "configs/latent-diffusion/shmt_h0.yaml"))
                 config.model.params.first_stage_config.params.ckpt_path = ae_ckpt
                 if enable_model2:
@@ -87,7 +87,8 @@ class SHMT_LoadModel:
                     print("***********infer h0 model************")
                     mode = "h0"
                     model = load_model_from_config(config, folder_paths.get_full_path("SHMT", shmt_ckpt))
-        
+            else:
+                raise "h4 ckpt need 755 ,h0 need 710 number in name,do'not rename it. "
         else:
             raise "need choice ckpt"
         
