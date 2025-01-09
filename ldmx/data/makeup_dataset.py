@@ -329,10 +329,10 @@ class MakeupDatasetTest(Dataset):
             assert name[
                    :-4] + '.png' in ref_seg_list, f'Please check the ref segmentation folder, the segmentation map of Figure {name} does not exist'
     
-    def transforms_size(self,size,image,mask):
+    def transforms_size(self,height,width,image,mask):
         transforms = albumentations.Compose([
-            albumentations.Resize(height=size, width=size),
-            albumentations.CenterCrop(height=size, width=size)
+            albumentations.Resize(height=height, width=width),
+            albumentations.CenterCrop(height=height, width=height)
         ])
         return transforms(image=image, mask=mask)
     
@@ -383,7 +383,7 @@ class MakeupDatasetTest(Dataset):
             source_image_depth = np.concatenate([source_image, source_depth], axis=2)
 
             #source_dict=self.transforms(image=source_image_depth, mask=source_seg)
-            source_dict = self.transforms_size(size=source_image.shape[1],image=source_image_depth, mask=source_seg)
+            source_dict = self.transforms_size(height=source_image.shape[0], width=source_image.shape[1],image=source_image_depth, mask=source_seg)
             
             source_image=source_dict['image'][:,:,0:3]
             source_depth = source_dict['image'][:, :, 3:6]
@@ -407,7 +407,7 @@ class MakeupDatasetTest(Dataset):
             ref_seg = cv2.imread(os.path.join(self.ref_seg_path, ref_name[:-4] + '.png'),
                                     flags=cv2.IMREAD_GRAYSCALE)
             #ref_dict = self.transforms(image=ref_image, mask=ref_seg) #原方法写死只能跑256
-            ref_dict = self.transforms_size(size=ref_seg.shape[1],image=ref_image, mask=ref_seg)
+            ref_dict = self.transforms_size(height=ref_image.shape[0], width=ref_image.shape[1],image=ref_image, mask=ref_seg)
            
             ref_image = ref_dict['image']
             ref_seg = ref_dict['mask']
@@ -460,7 +460,7 @@ class MakeupDatasetTest(Dataset):
 
             source_image_depth = np.concatenate([source_image, source_depth], axis=2)
 
-            source_dict = self.transforms_size(size=source_seg.shape[1],image=source_image_depth, mask=source_seg)
+            source_dict = self.transforms_size(height=source_seg.shape[0], width=source_seg.shape[1],image=source_image_depth, mask=source_seg)
             source_image = source_dict['image'][:, :, 0:3]
             source_depth = source_dict['image'][:, :, 3:6]
             source_seg = source_dict['mask']
@@ -481,7 +481,7 @@ class MakeupDatasetTest(Dataset):
             ref_image = cv2.cvtColor(ref_image, cv2.COLOR_BGR2RGB)
             ref_seg = cv2.imread(os.path.join(self.ref_seg_path, ref_name[:-4] + '.png'),
                                  flags=cv2.IMREAD_GRAYSCALE)
-            ref_dict = self.transforms_size(size=ref_image.shape[1],image=ref_image, mask=ref_seg)
+            ref_dict = self.transforms_size(height=ref_image.shape[0], width=ref_image.shape[1],image=ref_image, mask=ref_seg)
             ref_image = ref_dict['image']
             ref_seg = ref_dict['mask']
 
