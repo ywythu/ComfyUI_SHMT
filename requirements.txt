@@ -1,4 +1,4 @@
-albumentations==0.4.4
+albumentations
 opencv-python
 imageio
 pytorch-lightning
