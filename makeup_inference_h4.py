@@ -121,7 +121,7 @@ def infer_main_h4(model, seed, width,height,latent_channels,
                     source_HF_0 = model.lap_pyr_c1.pyramid_decom(source_face_gray)[4] # h4
                     
                     #source_HF_0_down4 = F.interpolate(source_HF_0, size=(64,64))
-                    source_HF_0_down4 = F.interpolate(source_HF_0, size=(height // downsampling_factor, height // downsampling_factor))
+                    source_HF_0_down4 = F.interpolate(source_HF_0, size=(height // downsampling_factor, width // downsampling_factor))
 
    
                     source_depth_down4 = F.pixel_unshuffle(source_depth, downscale_factor=4)
@@ -132,7 +132,7 @@ def infer_main_h4(model, seed, width,height,latent_channels,
 
 
                     #source_face_seg_64 = F.interpolate(source_face_seg, size=(64, 64), mode='bilinear')
-                    source_face_seg_64 = F.interpolate(source_face_seg, size=(height // downsampling_factor, height // downsampling_factor), mode='bilinear')
+                    source_face_seg_64 = F.interpolate(source_face_seg, size=(height // downsampling_factor, width // downsampling_factor), mode='bilinear')
                     
 
                     encoder_posterior_bg = model.encode_first_stage(source_bg)
