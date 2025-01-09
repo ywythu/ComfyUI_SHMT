@@ -127,7 +127,7 @@ def infer_main_h0(model, seed, width,height,latent_channels,
                     ref_LF_64 = F.pixel_unshuffle(ref_face, downscale_factor=4)
 
 
-                    source_face_seg_64 = F.interpolate(source_face_seg, size=(height // downsampling_factor, height // downsampling_factor), mode='bilinear')
+                    source_face_seg_64 = F.interpolate(source_face_seg, size=(height // downsampling_factor, width // downsampling_factor), mode='bilinear')
 
 
                     encoder_posterior_bg = model.encode_first_stage(source_bg)
