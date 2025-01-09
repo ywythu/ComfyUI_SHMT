@@ -145,7 +145,7 @@ class SHMT_Sampler:
         # pre img and data
         print("******** pre  input image,get seg ,3d map *********")
         ref_image_path, ref_seg_path, source_depth_path, source_seg_path, source_image_path = (
-            pre_image_data(id_image,makeup_image,seg_model,image_processor,width))
+            pre_image_data(id_image,makeup_image,seg_model,image_processor,width,height))
         
         print("******** start infer *********")
         if mode == "h4":
