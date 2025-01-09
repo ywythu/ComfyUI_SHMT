@@ -17,10 +17,10 @@ cur_path = os.path.dirname(os.path.abspath(__file__))
 device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
 
 
-def pre_image_data(id_image, makeup_image,seg_model,image_processor,width):
+def pre_image_data(id_image, makeup_image,seg_model,image_processor,width,height):
     #tensor to image
-    source_image = nomarl_upscale(id_image,width,width)
-    ref_image = nomarl_upscale(makeup_image,width,width)
+    source_image = nomarl_upscale(id_image,width,height)
+    ref_image = nomarl_upscale(makeup_image,width,height)
     #make dir
     folder_prefix = ''.join(random.choice("0123456789") for _ in range(5))
     infer_folder = os.path.join(folder_paths.get_temp_directory(), f"temp_{folder_prefix}")
