@@ -30,8 +30,13 @@ except:
 
 class SHMT_LoadModel:
     def __init__(self):
-        pass
-    
+        self.model = None
+        self.mode = None
+        self.image_processor = None
+        self.seg_model = None
+        self.model_name = None
+        self.model2 = None
+
     @classmethod
     def INPUT_TYPES(cls):
         shmt_ckpt_list = [i for i in folder_paths.get_filename_list("SHMT") if
@@ -58,49 +63,51 @@ class SHMT_LoadModel:
         model2 = None
         if shmt_ckpt != "none":
             if "710" in shmt_ckpt:  # h4
-                
                 config = OmegaConf.load(os.path.join(current_path, "configs/latent-diffusion/shmt_h4.yaml"))
                 config.model.params.first_stage_config.params.ckpt_path = ae_ckpt
-                model = load_model_from_config(config, folder_paths.get_full_path("SHMT", shmt_ckpt))
+                if not self.model or self.mode != "h4":
+                    self.model = load_model_from_config(config, folder_paths.get_full_path("SHMT", shmt_ckpt))
                 if enable_model2:
                     print("***********infer mix model************")
                     config2 = OmegaConf.load(os.path.join(current_path, "configs/latent-diffusion/shmt_h0.yaml"))
                     config2.model.params.first_stage_config.params.ckpt_path = ae_ckpt
-                    model2 = load_model_from_config(config2,
+
+                    self.model2 = load_model_from_config(config2,
                                                     os.path.join(folder_paths.models_dir, "SHMT/epoch=000755-001.ckpt"))
-                    mode = "mix"
+                    self.mode = "mix"
                 else:
-                    mode = "h4"
+                    self.mode = "h4"
                     print("***********infer h4 model************")
             elif "755" in shmt_ckpt:  # h0:
                 config = OmegaConf.load(os.path.join(current_path, "configs/latent-diffusion/shmt_h0.yaml"))
                 config.model.params.first_stage_config.params.ckpt_path = ae_ckpt
                 if enable_model2:
                     print("***********infer mix model************")
-                    mode = "mix"
+                    self.mode = "mix"
                     config1 = OmegaConf.load(os.path.join(current_path, "configs/latent-diffusion/shmt_h4.yaml"))
                     config1.model.params.first_stage_config.params.ckpt_path = ae_ckpt
-                    model = load_model_from_config(config1,
+                    self.model = load_model_from_config(config1,
                                                    os.path.join(folder_paths.models_dir, "SHMT/epoch=000710-001.ckpt"))
-                    model2 = load_model_from_config(config, folder_paths.get_full_path("SHMT", shmt_ckpt))
+                    self.model2 = load_model_from_config(config, folder_paths.get_full_path("SHMT", shmt_ckpt))
                 else:
                     print("***********infer h0 model************")
-                    mode = "h0"
-                    model = load_model_from_config(config, folder_paths.get_full_path("SHMT", shmt_ckpt))
+                    if not self.model or self.mode != "h0":
+                        self.mode = "h0"
+                        self.model = load_model_from_config(config, folder_paths.get_full_path("SHMT", shmt_ckpt))
             else:
                 raise "h4 ckpt need 755 ,h0 need 710 number in name,do'not rename it. "
         else:
             raise "need choice ckpt"
         
         # pre seg
-        if face_repo:
-            image_processor = SegformerImageProcessor.from_pretrained(face_repo)
-            seg_model = SegformerForSemanticSegmentation.from_pretrained(face_repo)
+        if face_repo and not (self.image_processor and self.seg_model):
+            self.image_processor = SegformerImageProcessor.from_pretrained(face_repo)
+            self.seg_model = SegformerForSemanticSegmentation.from_pretrained(face_repo)
         else:
             raise "Need fill 'jonathandinu/face-parsing' or local folder  "
         
         return (
-        {"model": model, "model2": model2, "mode": mode, "image_processor": image_processor, "seg_model": seg_model},)
+        {"model": self.model, "model2": self.model2, "mode": self.mode, "image_processor": self.image_processor, "seg_model": self.seg_model},)
 
 
 class SHMT_Sampler:
