@@ -175,8 +175,8 @@ class SHMT_Sampler:
                                        ref_image_path, ref_seg_path, source_seg_path,
                                        source_depth_path, source_image_path)
         
-        model.to("cpu")#显存不会自动释放，手动迁移，不然很容易OOM
-        torch.cuda.empty_cache()
+        # model.to("cpu")#显存不会自动释放，手动迁移，不然很容易OOM
+        # torch.cuda.empty_cache()
         image = output_img[0].permute(0, 2, 3, 1) if len(output_img) == 1 else\
             torch.cat(output_img, dim=0).permute(0,2,3,1)
         return (image,)
