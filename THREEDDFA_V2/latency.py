@@ -59,8 +59,8 @@ def main(args):
         n = len(boxes)
         if n == 0:
             print(f'No face detected, exit')
-            sys.exit(-1)
-
+            # sys.exit(-1)
+            raise Exception("No face detected, exit")
         _t['reg'].tic()
         param_lst, roi_box_lst = tddfa(img, boxes)
         _t['reg'].toc()

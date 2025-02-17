@@ -27,7 +27,8 @@ def remove_prefix(state_dict, prefix):
 def load_model(model, pretrained_path, load_to_cpu):
     if not osp.isfile(pretrained_path):
         print(f'The pre-trained FaceBoxes model {pretrained_path} does not exist')
-        sys.exit('-1')
+        # sys.exit('-1')
+        raise Exception("pre-trained FaceBoxes model path does not exist, exit")
     # print('Loading pretrained model from {}'.format(pretrained_path))
     if load_to_cpu:
         pretrained_dict = torch.load(pretrained_path, map_location=lambda storage, loc: storage)
